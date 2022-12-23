@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+import All from './All';
+import { useEffect,useState } from 'react';
 import './App.css';
 
+const URL="https://v6.exchangerate-api.com/v6/4be1e93cf04f77321e054ac1/latest/USD" 
+
+
+
 function App() {
+  const [CurrencyOptions,setCurrencyOptions]=useState([])
+  const [currentCurrency,setCurrentCurrency]=useState()
+  const [toCurrency,settoCurrency]=useState()
+
+
+  console.log(CurrencyOptions)
+  useEffect (() => {
+    fetch(URL)
+      .then(res => res.json())
+      .then(data => {
+        setCurrencyOptions([data.base_code, ...Object.keys(data.conversion_rates)])
+        setCurrentCurrency(data.base_code)
+        settoCurrency(data.base_code)
+      })
+  },[])
+  
+  
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+        <h1>Currency Conversion</h1>
+        <All CurrencyOptions={ CurrencyOptions }
+         currentCurrency={currentCurrency}
+         toCurrency={toCurrency}
+         changefromCurrency={e => setCurrentCurrency(e.target.value)}
+         onChangeCurrency={e => settoCurrency(e.target.value)}/> 
+
     </div>
   );
 }
