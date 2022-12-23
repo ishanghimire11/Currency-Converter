@@ -1,3 +1,5 @@
+### `Before getting started do not forget to use the command "npm install" to install the specific packages used in this react project. The command will install the node_modules whcih will install our modules`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
